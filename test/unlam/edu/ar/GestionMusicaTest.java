@@ -22,11 +22,11 @@ public class GestionMusicaTest {
 	public void dadoQueExisteUnaPlataformaDeMusicaPuedoRegistrarUnUsuarioExitosamenteVerificandoQueSuNombreNoSeaNulo() {
 		String contrasenia = "juli123";
 		String nombre = "Julieta";
-		Usuario usuario = new Usuario(contrasenia, nombre);
+		Usuario usuario = new UsuarioPago(contrasenia, nombre);
 		
 		String contrasenia2 = "hola345";
 		String nombre2 = "";
-		Usuario otroUsuario = new Usuario(contrasenia2, nombre2);
+		Usuario otroUsuario = new UsuarioPago(contrasenia2, nombre2);
 		
 		Boolean registrado = spotify.registrarUsuario(usuario);
 		Boolean registrado2 = spotify.registrarUsuario(otroUsuario);
@@ -39,7 +39,7 @@ public class GestionMusicaTest {
 	public void dadoQueExisteUnaPlataformaDeMusicaPuedoCrearUnaPlaylistExitosamente() {
 		String contrasenia = "juli123";
 		String nombre = "Julieta";
-		Usuario usuario = new Usuario(contrasenia, nombre);
+		Usuario usuario = new UsuarioPago(contrasenia, nombre);
 		
 		spotify.registrarUsuario(usuario);
 		
@@ -53,7 +53,7 @@ public class GestionMusicaTest {
 	public void dadoQueSeCreaUnaPlaylistDeUnUsuarioNoRegistradoObtengoUnResultadoNegativo() {
 		String contrasenia = "juli123";
 		String nombre = "Julieta";
-		Usuario usuario = new Usuario(contrasenia, nombre);
+		Usuario usuario = new UsuarioPago(contrasenia, nombre);
 		
 		Playlist nuevaPlaylist = new Playlist(usuario, "MI NUEVA PLAYLIST");
 		
@@ -65,7 +65,7 @@ public class GestionMusicaTest {
 	public void dadoQueExisteUnaPlaylistPuedoAgregarUnaCancion() {
 		String contrasenia = "juli123";
 		String nombre = "Julieta";
-		Usuario usuario = new Usuario(contrasenia, nombre);
+		Usuario usuario = new UsuarioPago(contrasenia, nombre);
 		
 		spotify.registrarUsuario(usuario);
 		
@@ -82,7 +82,7 @@ public class GestionMusicaTest {
 	public void dadoQueExisteUnaPlaylistYQuieroAgregarUnaCancionRepetidaObtengoUnResultadoNegativo() {
 		String contrasenia = "juli123";
 		String nombre = "Julieta";
-		Usuario usuario = new Usuario(contrasenia, nombre);
+		Usuario usuario = new UsuarioPago(contrasenia, nombre);
 		
 		spotify.registrarUsuario(usuario);
 		
@@ -100,7 +100,7 @@ public class GestionMusicaTest {
 	public void dadoQueExisteUnaPlaylistConCancionesPuedoCalcularSuDuracionTotal() {
 		String contrasenia = "juli123";
 		String nombre = "Julieta";
-		Usuario usuario = new Usuario(contrasenia, nombre);
+		Usuario usuario = new UsuarioPago(contrasenia, nombre);
 		
 		spotify.registrarUsuario(usuario);
 		

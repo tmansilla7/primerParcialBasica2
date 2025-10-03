@@ -2,10 +2,11 @@ package unlam.edu.ar;
 
 import java.util.Objects;
 
-public class Usuario {
+public abstract class Usuario {
 
 	private String contrasenia;
 	private String nombre;
+	private Integer cantidadMaximaDePlaylists;
 
 	public Usuario(String contrasenia, String nombre) {
 		this.contrasenia = contrasenia;
@@ -26,6 +27,13 @@ public class Usuario {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public void setCantidadMaximaDePlaylists(Integer num) {
+		this.cantidadMaximaDePlaylists = num;
+	}
+	public Integer getCantidadMaximaDePlaylists() {
+		return this.cantidadMaximaDePlaylists;
 	}
 
 	@Override
