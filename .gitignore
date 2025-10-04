@@ -1,0 +1,6 @@
+# Archivos compilados de Java
+*.class
+
+# Carpetas de output
+/bin/
+/target/

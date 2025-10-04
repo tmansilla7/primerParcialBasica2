@@ -7,4 +7,11 @@ public class UsuarioGratuito extends Usuario{
 		setCantidadMaximaDePlaylists(3);
 	}
 
+	
+	@Override
+	public boolean puedeAgregarMuchasCanciones() {
+		return false;
+	}
+
+
 }

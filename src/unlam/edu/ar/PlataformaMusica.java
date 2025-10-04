@@ -20,7 +20,13 @@ public class PlataformaMusica {
 		return false;
 	}
 
+	public Boolean eliminarUsuario(Usuario usuario) {
+		return this.usuarios.remove(usuario);
+	}
 	public Boolean crearPlaylist(Playlist nuevaPlaylist) {
+		if(nuevaPlaylist.getNombre() == null || nuevaPlaylist.getNombre().isBlank()) {
+			return false;
+		}
 		for (Usuario usuario : usuarios) {
 			if(usuario.equals(nuevaPlaylist.getUsuario())) {
 				this.playlists.add(nuevaPlaylist);

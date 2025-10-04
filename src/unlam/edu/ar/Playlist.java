@@ -11,7 +11,9 @@ public class Playlist {
 	private String nombre;
 	private Usuario usuario;
 	private HashSet<Cancion> canciones;
-
+	private static Integer LIMITE_CANCIONES_USUARIO_NORMAL = 10;
+	
+	
 	public Playlist(Usuario usuario, String nombre) {
 		this.usuario = usuario;
 		this.nombre = nombre;
@@ -28,10 +30,13 @@ public class Playlist {
 	}
 
 	public Boolean agregarCancion(Cancion cancion, LocalDateTime fechaAgregado) {
-		if(fechaAgregado.isBefore(LocalDateTime.now()) || fechaAgregado.isEqual(LocalDateTime.now())) {
-			return this.canciones.add(cancion);
+		if(fechaAgregado.isAfter(LocalDateTime.now())) {
+			return false;
 		}
-		return false;
+		if(!usuario.puedeAgregarMuchasCanciones() && canciones.size() >= LIMITE_CANCIONES_USUARIO_NORMAL) {
+			return false;
+		}
+		return this.canciones.add(cancion);
 	}
 	
 	public Boolean borrarCancion(Cancion cancion) {
@@ -65,6 +70,10 @@ public class Playlist {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public boolean reproducir() {
+		return !this.canciones.isEmpty();
 	}
 
 	

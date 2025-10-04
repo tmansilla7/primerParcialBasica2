@@ -29,9 +29,18 @@ public abstract class Usuario {
 		this.nombre = nombre;
 	}
 	
+
+
+	public boolean puedeAgregarMuchasCanciones() {
+		return false;
+	}
+	
+
+
 	public void setCantidadMaximaDePlaylists(Integer num) {
 		this.cantidadMaximaDePlaylists = num;
 	}
+	
 	public Integer getCantidadMaximaDePlaylists() {
 		return this.cantidadMaximaDePlaylists;
 	}

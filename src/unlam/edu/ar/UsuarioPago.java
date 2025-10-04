@@ -7,4 +7,11 @@ public class UsuarioPago extends Usuario{
 		setCantidadMaximaDePlaylists(Integer.MAX_VALUE);
 	}
 
+	
+	@Override
+	public boolean puedeAgregarMuchasCanciones() {
+		return true;
+	}
+
+
 }
