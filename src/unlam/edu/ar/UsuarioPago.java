@@ -6,10 +6,12 @@ public class UsuarioPago extends Usuario{
 		super(contrasenia, nombre);
 		setCantidadMaximaDePlaylists(Integer.MAX_VALUE);
 	}
+
 	
 	@Override
 	public boolean puedeAgregarMuchasCanciones() {
 		return true;
 	}
+
 
 }

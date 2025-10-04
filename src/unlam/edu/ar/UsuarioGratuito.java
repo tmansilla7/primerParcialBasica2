@@ -6,10 +6,12 @@ public class UsuarioGratuito extends Usuario{
 		super(contrasenia, nombre);
 		setCantidadMaximaDePlaylists(3);
 	}
+
 	
 	@Override
 	public boolean puedeAgregarMuchasCanciones() {
 		return false;
 	}
+
 
 }

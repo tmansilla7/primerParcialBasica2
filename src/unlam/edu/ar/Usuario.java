@@ -30,18 +30,20 @@ public abstract class Usuario {
 	}
 	
 
+
 	public boolean puedeAgregarMuchasCanciones() {
 		return false;
 	}
 	
 
+
 	public void setCantidadMaximaDePlaylists(Integer num) {
 		this.cantidadMaximaDePlaylists = num;
 	}
+	
 	public Integer getCantidadMaximaDePlaylists() {
 		return this.cantidadMaximaDePlaylists;
 	}
-
 
 	@Override
 	public int hashCode() {
