@@ -76,6 +76,9 @@ public class Playlist {
 		return !this.canciones.isEmpty();
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Playlist [id=" + id + ", nombre=" + nombre + ", usuario=" + usuario + ", canciones=" + canciones + "]";
+	}
 
 }

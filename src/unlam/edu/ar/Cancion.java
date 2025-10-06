@@ -3,8 +3,12 @@ package unlam.edu.ar;
 import java.time.Duration;
 //import java.util.Objects;
 
-
 public class Cancion {
+
+	@Override
+	public String toString() {
+		return "Cancion [id=" + id + ", nombre=" + nombre + ", artista=" + artista + ", duracion=" + duracion + "]";
+	}
 
 	private Integer id;
 	private String nombre;

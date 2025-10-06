@@ -291,4 +291,44 @@ public class GestionMusicaTest {
 		assertTrue(playlistUsuarioComun.agregarCancion(cancion10, fechaAgregado));
 		assertTrue(playlistUsuarioComun.agregarCancion(cancion11, fechaAgregado));
 	}
+	
+	@Test
+	public void convertirUsuarioGratuitoAPagoExitoso() {
+		Usuario nuevo = new UsuarioGratuito("12345", "Tomas Mansilla");
+		nuevo.setSaldo(1500.0d);
+		spotify.registrarUsuario(nuevo);
+		boolean cambio = spotify.cambiarTipoDeUsuario2(nuevo);
+		
+		assertEquals(true, cambio);
+	}
+	
+	@Test
+	public void convertirUsuarioGratuitoAPagoInvalido() {
+		Usuario nuevo = new UsuarioGratuito("12345", "Tomas Mansilla");
+		nuevo.setSaldo(1000.0d);
+		spotify.registrarUsuario(nuevo);
+		boolean cambio = spotify.cambiarTipoDeUsuario2(nuevo);
+		
+		assertEquals(false, cambio);
+	}
+	
+	@Test
+	public void convertirUsuarioPagoAGratuitoExitoso() {
+		Usuario nuevo = new UsuarioPago("12345", "Tomas Mansilla");
+		nuevo.setSaldo(1000.0d);
+		spotify.registrarUsuario(nuevo);
+		boolean cambio = spotify.cambiarTipoDeUsuario2(nuevo);
+		
+		assertEquals(true, cambio);
+	}
+	
+	@Test
+	public void convertirUsuarioPagoAGratuitoInvalido() {
+		Usuario nuevo = new UsuarioPago("12345", "Tomas Mansilla");
+		nuevo.setSaldo(1500.0d);
+		spotify.registrarUsuario(nuevo);
+		boolean cambio = spotify.cambiarTipoDeUsuario2(nuevo);
+		
+		assertEquals(false, cambio);
+	}
 }
