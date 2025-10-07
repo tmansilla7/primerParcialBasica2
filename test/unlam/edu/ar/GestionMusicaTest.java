@@ -1,14 +1,20 @@
 package unlam.edu.ar;
 
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+
 
 public class GestionMusicaTest {
 	private PlataformaMusica spotify;
@@ -124,7 +130,7 @@ public class GestionMusicaTest {
 	}
 
 	@Test
-	public void cuandoQuieroReprucirUnaPlaylistSinCancionesObtengoUnResultadoNegativo(){
+	public void cuandoQuieroReproducirUnaPlaylistSinCancionesObtengoUnResultadoNegativo(){
 		String contrasenia = "martina456";
 		String nombre = "Martina";
 		Usuario usuario = new UsuarioGratuito (contrasenia,nombre);
@@ -141,7 +147,7 @@ public class GestionMusicaTest {
 	}
 	
 	@Test
-	public void cuandoQuieroReprucirUnaPlaylistConCancionesObtengoUnResultadoPositivo(){
+	public void cuandoQuieroReproucirUnaPlaylistConCancionesObtengoUnResultadoPositivo(){
 		String contrasenia = "martina456";
 		String nombre = "Martina";
 		Usuario usuario = new UsuarioGratuito(contrasenia,nombre);
@@ -262,9 +268,9 @@ public class GestionMusicaTest {
 		
 		spotify.registrarUsuario(usuarioPremium);
 		
-		Playlist playlistUsuarioComun = new Playlist (usuarioPremium, "Playlist De 11 canciones");
+		Playlist playlistUsuarioPremium = new Playlist (usuarioPremium, "Playlist De 11 canciones");
 		
-		spotify.crearPlaylist(playlistUsuarioComun );
+		spotify.crearPlaylist(playlistUsuarioPremium );
 		
 		LocalDateTime fechaAgregado = LocalDateTime.of(2025, 10, 3, 11, 30);
 		Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(18));
@@ -279,16 +285,286 @@ public class GestionMusicaTest {
 		Cancion cancion10 = new Cancion(10, "Often", "The Weeknd", Duration.ofMinutes(4).plusSeconds(9));
 		Cancion cancion11 = new Cancion(11, "Party Monster", "The Weeknd", Duration.ofMinutes(4).plusSeconds(9));
 		
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion1, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion2, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion3, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion4, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion5, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion6, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion7, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion8, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion9, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion10, fechaAgregado));
-		assertTrue(playlistUsuarioComun.agregarCancion(cancion11, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion1, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion2, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion3, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion4, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion5, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion6, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion7, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion8, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion9, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion10, fechaAgregado));
+		assertTrue(playlistUsuarioPremium.agregarCancion(cancion11, fechaAgregado));
 	}
+	
+	
+	@Test
+	public void dadoQueElUsuarioCreaUnaPlaylistPuedeReproducirlaYComienzaConLaPrimerCancion() {
+		String contrasenia = "martina456";
+		String nombre = "Martina";
+		Usuario usuarioPremium = new UsuarioPago (contrasenia,nombre);
+		
+		spotify.registrarUsuario(usuarioPremium);
+		
+		Playlist playlist = new Playlist (usuarioPremium, "Playlist De 11 canciones");
+		
+		spotify.crearPlaylist(playlist );
+		
+		LocalDateTime fechaAgregado = LocalDateTime.of(2025, 10, 3, 11, 30);
+		Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(18));
+		Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(54));
+		Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(01));
+		
+		assertTrue(playlist.agregarCancion(cancion1, fechaAgregado));
+		assertTrue(playlist.agregarCancion(cancion2, fechaAgregado));
+		assertTrue(playlist.agregarCancion(cancion3, fechaAgregado));
+		
+		Reproductor reproductor = new Reproductor(playlist);
+		
+		Cancion actual = reproductor.reproducir();
+		
+		assertEquals(cancion1, actual);
+		
+	}
+	
+	@Test
+	public void dadoQueElUsuarioCreaUnaPlaylistPuedeReproducirlaDespuesPausarYReaunudarExitosamente() {
+		String contrasenia = "martina456";
+		String nombre = "Martina";
+		Usuario usuarioPremium = new UsuarioPago (contrasenia,nombre);
+		
+		spotify.registrarUsuario(usuarioPremium);
+		
+		Playlist playlist = new Playlist (usuarioPremium, "Playlist De 11 canciones");
+		
+		spotify.crearPlaylist(playlist );
+		
+		LocalDateTime fechaAgregado = LocalDateTime.of(2025, 10, 3, 11, 30);
+		Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(18));
+		Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(54));
+		Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(01));
+		
+		assertTrue(playlist.agregarCancion(cancion1, fechaAgregado));
+		assertTrue(playlist.agregarCancion(cancion2, fechaAgregado));
+		assertTrue(playlist.agregarCancion(cancion3, fechaAgregado));
+		
+		Reproductor reproductor = new Reproductor(playlist);
+		
+		Cancion actual = reproductor.reproducir();
+		
+		reproductor.pausarCancion();
+		
+		assertFalse(reproductor.getReproduciendo());
+		
+		reproductor.reanudarCancion();
+		
+		assertTrue(reproductor.getReproduciendo());
+		
+	
+		
+	}
+	
+	@Test
+	public void dadoQueElUsuarioCreaUnaPlaylistPuedeReproducirlaYCambiarLaCancionALaSiguienteExitosamente() {
+		String contrasenia = "martina456";
+		String nombre = "Martina";
+		Usuario usuarioPremium = new UsuarioPago (contrasenia,nombre);
+		
+		spotify.registrarUsuario(usuarioPremium);
+		
+		Playlist playlist = new Playlist (usuarioPremium, "Playlist De 11 canciones");
+		
+		spotify.crearPlaylist(playlist );
+		
+		LocalDateTime fechaAgregado = LocalDateTime.of(2025, 10, 3, 11, 30);
+		Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(18));
+		Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(54));
+		Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(01));
+		
+		assertTrue(playlist.agregarCancion(cancion1, fechaAgregado));
+		assertTrue(playlist.agregarCancion(cancion2, fechaAgregado));
+		assertTrue(playlist.agregarCancion(cancion3, fechaAgregado));
+		
+		Reproductor reproductor = new Reproductor(playlist);
+		
+		reproductor.reproducir();
+		
+		Cancion siguiente = reproductor.pasarALaSiguienteCancion();
+		
+		assertEquals(cancion2, siguiente);
+	    assertEquals(cancion2, reproductor.getCancionActual());
+	    assertTrue(reproductor.getReproduciendo());
+	
+	}
+	
+	@Test
+	public void dadoQueElUsuarioCreaUnaPlaylistPuedeReproducirlaYVolverALaCancionAnteriorExitosamente() {
+		String contrasenia = "martina456";
+		String nombre = "Martina";
+		Usuario usuarioPremium = new UsuarioPago (contrasenia,nombre);
+		
+		spotify.registrarUsuario(usuarioPremium);
+		
+		Playlist playlist = new Playlist (usuarioPremium, "Playlist De 11 canciones");
+		
+		spotify.crearPlaylist(playlist );
+		
+		LocalDateTime fechaAgregado = LocalDateTime.of(2025, 10, 3, 11, 30);
+		Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(18));
+		Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(54));
+		Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(01));
+		
+		assertTrue(playlist.agregarCancion(cancion1, fechaAgregado));
+		assertTrue(playlist.agregarCancion(cancion2, fechaAgregado));
+		assertTrue(playlist.agregarCancion(cancion3, fechaAgregado));
+		
+		Reproductor reproductor = new Reproductor(playlist);
+		
+		reproductor.reproducir();
+		reproductor.pasarALaSiguienteCancion();
+		reproductor.pasarALaSiguienteCancion();
+		
+		Cancion anterior = reproductor.volverALaCancionAnterior();
+		
+		assertEquals(cancion2, anterior);
+	    assertEquals(cancion2, reproductor.getCancionActual());
+	    assertTrue(reproductor.getReproduciendo());
+	
+	}
+	
+	
+	
+	
+	
+	@Test
+	public void dadoQueSePuedeReproducirCancionesDaUnResultadoPositivo() {
+		
+		Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+		Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+		Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(00));
+		
+		LocalDateTime inicio = LocalDateTime.of(2025, 10, 7, 12, 0);
+		
+		Boolean reproducido = spotify.reproducir(cancion1, null);
+		
+		Reproduccion actual = spotify.obtenerCancionActual();
+		
+		assertEquals(cancion1, actual.getCancion());
+		
+		
+	}
+	
+	@Test
+	public void dadoQueSePuedeReproducirUnaNuevaCancionMarcaFinALaAnteriorYLaNuevaPasaASerActual() {
+		
+		Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+		Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+		Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(00));
+		
+		LocalDateTime inicio = LocalDateTime.of(2025, 10, 7, 12, 0);
+		
+		spotify.reproducir(cancion1, inicio);
+		
+		Boolean reproducido = spotify.reproducirNuevaCancion(cancion2);
+		
+		assertTrue(reproducido);
+		
+		
+		Reproduccion anterior = spotify.getReproducciones().get(0); Reproduccion
+		actual = spotify.obtenerCancionActual();
+		  
+		 
+		assertNotNull(anterior.getFin());
+		  
+		assertEquals(cancion2, actual.getCancion()); 
+		  
+		assertNull(actual.getFin());
+		 
+		
+		
+	}
+	
+	   @Test
+	    public void dadoQuePuedoCambiarALaSiguienteCancionObtengoResultadoPositivo() {
+		   
+		   
+			Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+			Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+			Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(00));
+			
+			LocalDateTime inicio = LocalDateTime.of(2025, 10, 7, 12, 0);
+	        spotify.reproducir(cancion1, inicio);
+	        spotify.reproducirNuevaCancion(cancion2);
+	        spotify.reproducirNuevaCancion(cancion3);
+
+	        spotify.cambiarALaCancionAnterior();
+
+	        boolean cambiaALaSiguiente = spotify.cambiarALaSiguienteCancion();
+
+	        assertTrue(cambiaALaSiguiente);
+	        
+	        Reproduccion actual = spotify.obtenerCancionActual();
+	        assertEquals(cancion3, actual.getCancion());
+	    }
+	   
+	   
+	
+	   
+	   @Test
+	    public void dadoQuePuedoVolverALaCancionAnteriorObtengoResultadoPositivo() {
+		   
+
+			Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+			Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+			Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(00));
+			
+			LocalDateTime inicio = LocalDateTime.of(2025, 10, 7, 12, 0);
+			
+	        spotify.reproducir(cancion1, inicio);
+	        spotify.reproducirNuevaCancion(cancion2);
+	        spotify.reproducirNuevaCancion(cancion3);
+
+	        boolean retrocedio = spotify.cambiarALaCancionAnterior();
+
+	        assertTrue(retrocedio);
+	        Reproduccion actual = spotify.obtenerCancionActual();
+	        assertEquals(cancion2, actual.getCancion());
+	    }
+	   
+	   
+	   @Test
+	    public void testObtenerCancionesReproducidasEntre() {
+	  
+
+	      
+	        Cancion cancion1 = new Cancion(1, "Heartless", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+			Cancion cancion2 = new Cancion(2, "Moth To A Flame", "The Weeknd", Duration.ofMinutes(3).plusSeconds(00));
+			Cancion cancion3 = new Cancion(3, "After Hours", "The Weeknd", Duration.ofMinutes(6).plusSeconds(00));
+
+	        
+	        LocalDateTime inicio = LocalDateTime.of(2025, 10, 7, 12, 0);  
+	       
+	        
+	        spotify.reproducir(cancion1, inicio);
+	        spotify.reproducirNuevaCancion(cancion2);
+	        spotify.reproducirNuevaCancion(cancion3);
+
+	      
+	        LocalDateTime desde = LocalDateTime.of(2025, 10, 7, 12, 4);
+	        LocalDateTime hasta = LocalDateTime.of(2025, 10, 7, 12, 11);
+
+	       
+	        List<Cancion> canciones = spotify.obtenerCancionesReproducidasEntre(desde, hasta);
+
+	        
+	        assertTrue(canciones.contains(cancion2));
+	        assertTrue(canciones.contains(cancion3));
+	        assertFalse(canciones.contains(cancion1));
+
+	       
+	        assertEquals(2, canciones.size());
+	    }
+	
 }
+	
