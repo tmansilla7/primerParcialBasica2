@@ -65,7 +65,7 @@ public abstract class Usuario {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(contrasenia);
+		return Objects.hash(nombre);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public abstract class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(contrasenia, other.contrasenia);
+		return Objects.equals(nombre, other.nombre);
 	}
 	
 }

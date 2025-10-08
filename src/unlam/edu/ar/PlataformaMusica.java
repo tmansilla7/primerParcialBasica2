@@ -85,6 +85,16 @@ public class PlataformaMusica {
 		return resultado;
 	}
 	
+	public Boolean borrarPlaylist(Playlist playlist) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.equals(playlist.getUsuario())) {
+                this.playlists.remove(playlist);
+                return true;
+            }
+        }
+        return false;
+    }
+	
 	public HashSet<Usuario> getUsuarios(){
 		return this.usuarios;
 	}
