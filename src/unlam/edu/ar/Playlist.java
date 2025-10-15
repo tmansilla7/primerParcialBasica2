@@ -6,15 +6,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Playlist {
-	
+
 	private Integer id;
 	private static Integer proximoId = 0;
 	private String nombre;
 	private Usuario usuario;
 	private ArrayList<Cancion> canciones;
 	private static Integer LIMITE_CANCIONES_USUARIO_NORMAL = 10;
-	
-	
+
 	public Playlist(Usuario usuario, String nombre) {
 		this.usuario = usuario;
 		this.nombre = nombre;
@@ -31,10 +30,10 @@ public class Playlist {
 	}
 
 	public Boolean agregarCancion(Cancion cancion, LocalDateTime fechaAgregado) {
-		if(fechaAgregado.isAfter(LocalDateTime.now())) {
+		if (fechaAgregado.isAfter(LocalDateTime.now())) {
 			return false;
 		}
-		if(!usuario.puedeAgregarMuchasCanciones() && canciones.size() >= LIMITE_CANCIONES_USUARIO_NORMAL) {
+		if (!usuario.puedeAgregarMuchasCanciones() && canciones.size() >= LIMITE_CANCIONES_USUARIO_NORMAL) {
 			return false;
 		}
 		
@@ -44,10 +43,10 @@ public class Playlist {
 		
 		return this.canciones.add(cancion);
 	}
-	
+
 	public Boolean borrarCancion(Cancion cancion) {
 		for (Cancion cancionAgregada : canciones) {
-			if(cancionAgregada.equals(cancion)) {
+			if (cancionAgregada.equals(cancion)) {
 				return this.canciones.remove(cancion);
 			}
 		}
@@ -61,7 +60,7 @@ public class Playlist {
 		}
 		return duracion;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -81,6 +80,7 @@ public class Playlist {
 	public boolean reproducir() {
 		return !this.canciones.isEmpty();
 	}
+
 
 	public static Integer getProximoId() {
 		return proximoId;
@@ -109,5 +109,15 @@ public class Playlist {
 	}
 
 	
+
+	public Integer obtenerCantidadCanciones() {
+		return this.canciones.size();
+	}
+
+
+	@Override
+	public String toString() {
+		return "Playlist [id=" + id + ", nombre=" + nombre + ", usuario=" + usuario + ", canciones=" + canciones + "]";
+	}
 
 }

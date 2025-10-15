@@ -7,10 +7,34 @@ public abstract class Usuario {
 	private String contrasenia;
 	private String nombre;
 	private Integer cantidadMaximaDePlaylists;
-
+	private Double saldo;
+	private String tipo;
+	
 	public Usuario(String contrasenia, String nombre) {
 		this.contrasenia = contrasenia;
 		this.nombre = nombre;
+		this.saldo = 0.0;
+		this.tipo = null;
+	}
+	
+	public void setTipo(String n) {
+		this.tipo = n;
+	}
+
+	public void setSaldo(Double n) {
+		this.saldo = n;
+	}
+	
+	public Double getSaldo() {
+		return this.saldo;
+	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Usuario [nombre=" + nombre + ", cantidadMaximaDePlaylists=" + cantidadMaximaDePlaylists + ", saldo="
+				+ saldo + ", tipo=" + tipo + "]";
 	}
 
 	public String getContrasenia() {
@@ -29,13 +53,9 @@ public abstract class Usuario {
 		this.nombre = nombre;
 	}
 	
-
-
 	public boolean puedeAgregarMuchasCanciones() {
 		return false;
 	}
-	
-
 
 	public void setCantidadMaximaDePlaylists(Integer num) {
 		this.cantidadMaximaDePlaylists = num;
@@ -47,7 +67,7 @@ public abstract class Usuario {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(contrasenia);
+		return Objects.hash(nombre);
 	}
 
 	@Override
@@ -59,8 +79,7 @@ public abstract class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(contrasenia, other.contrasenia);
+		return Objects.equals(nombre, other.nombre);
 	}
 	
-
 }

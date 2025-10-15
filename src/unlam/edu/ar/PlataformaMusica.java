@@ -6,20 +6,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
+
 public class PlataformaMusica {
 
 	private HashSet<Usuario> usuarios;
 	private ArrayList<Playlist> playlists;
+
 	private List<Reproduccion> reproducciones;
 	private ListIterator<Reproduccion> iterador;
+	private final Double cuotaMensual;
 
 	public PlataformaMusica() {
 		this.usuarios = new HashSet<>();
 		this.playlists = new ArrayList<>();
 		this.reproducciones = new ArrayList<>();
 		this.iterador = null;
-
+		this.cuotaMensual = 1500.0d;
 	}
+
+	
+	
+
 
 	public Boolean registrarUsuario(Usuario usuario) {
 		if (usuario.getNombre() != null && !usuario.getNombre().isBlank() && usuario.getContrasenia() != null
@@ -150,6 +158,63 @@ public class PlataformaMusica {
   
     
 	
+	public Boolean cambiarTipoDeUsuario(Usuario user) {
+		for(Usuario u:usuarios) {
+			if(u.equals(user)) {
+				if(user instanceof UsuarioGratuito && user.getSaldo() >= cuotaMensual) {
+					user = new UsuarioPago(user.getContrasenia(), user.getNombre());					
+				}
+				if(user instanceof UsuarioPago) {
+					user = new UsuarioGratuito(user.getContrasenia(), user.getNombre());
+				}
+				
+				eliminarUsuario(u);
+				usuarios.add(user);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public Boolean cambiarTipoDeUsuario2(Usuario user) {
+		Boolean resultado = false;
+		
+		for(Usuario u:usuarios) {
+			if(!u.equals(user)) {
+				return resultado;
+			}
+			else {
+				if(user instanceof UsuarioGratuito && user.getSaldo() >= cuotaMensual) {
+					user = new UsuarioPago(user.getContrasenia(), user.getNombre());					
+					resultado = true;
+				}
+				if(user instanceof UsuarioPago && user.getSaldo() < cuotaMensual) {
+					user = new UsuarioGratuito(user.getContrasenia(), user.getNombre());
+					resultado = true;
+				}
+				
+				eliminarUsuario(u);
+				usuarios.add(user);
+				
+			}
+		}
+		
+		return resultado;
+	}
+	
+	public Boolean borrarPlaylist(Playlist playlist) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.equals(playlist.getUsuario())) {
+                this.playlists.remove(playlist);
+                return true;
+            }
+        }
+        return false;
+    }
+	
+
+
 
 	public List<Cancion> obtenerCancionesReproducidasEntre(LocalDateTime desde, LocalDateTime hasta) {
 
@@ -206,5 +271,13 @@ public class PlataformaMusica {
 	public void setIterador(ListIterator<Reproduccion> iterador) {
 		this.iterador = iterador;
 	}
+
+
+	@Override
+	public String toString() {
+		return "PlataformaMusica [usuarios=" + usuarios + ", playlists=" + playlists + ", cuotaMensual=" + cuotaMensual
+				+ "]";
+	}
+	
 
 }
