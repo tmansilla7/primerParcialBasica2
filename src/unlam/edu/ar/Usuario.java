@@ -29,6 +29,8 @@ public abstract class Usuario {
 		return this.saldo;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
 		return "Usuario [nombre=" + nombre + ", cantidadMaximaDePlaylists=" + cantidadMaximaDePlaylists + ", saldo="
